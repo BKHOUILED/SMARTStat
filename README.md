@@ -1,1 +1,1 @@
-# Econometrics
+# EasyStat
