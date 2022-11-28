@@ -1,1 +1,1 @@
-# EconometricView
+# EasyStat
