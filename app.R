@@ -69,8 +69,8 @@ ui <- fluidPage(
       ),
       conditionalPanel(
         condition = "input.inference == 'two means (paired samples)'",
-        textInput("sample1_twomeanspaired", "Sample 1", value = "10, 20, 30", placeholder = "Enter values separated by a comma"),
-        textInput("sample2_twomeanspaired", "Sample 2", value = "15, 25, 35", placeholder = "Enter values separated by a comma"),
+        textInput("sample1_twomeanspaired", "Sample 1", value = "10, 20, 30, 12", placeholder = "Enter values separated by a comma"),
+        textInput("sample2_twomeanspaired", "Sample 2", value = "15, 25, 35, 20", placeholder = "Enter values separated by a comma"),
         hr(),
         checkboxInput("popsd_twomeanspaired", "\\( \\sigma^2_D \\) is known", FALSE),
         conditionalPanel(
