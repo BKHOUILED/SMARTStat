@@ -236,7 +236,7 @@ ui <- fluidPage(
                   value = 0.05
       ),
       hr(),
-      # HTML('<hr style="border:1px solid #ccc;"/>'),
+      # Logo CC BY 4.0
       HTML('<a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.ar" target="_blank"><img alt="Licence Creative Commons" style="border-width:0"
         src="https://mirrors.creativecommons.org/presskit/buttons/80x15/svg/by.svg"/></a> This work of <a href="http://sites.uclouvain.be/RShiny"
         target="_blank"><font face="Courier">RShiny</font></a> is made under the terms of the <a rel="license"
@@ -302,15 +302,9 @@ server <- function(input, output) {
     } else {
       pnorm(statistic, lower.tail = FALSE)
     }
-    # p <- (1 - pnorm((M-m0)/S))
     LCL <- (M - S * qnorm(1 - alpha / 2))
     UCL <- (M + S * qnorm(1 - alpha / 2))
     value <- list(mean = M, m0 = m0, sigma = sigma, statistic = statistic, p.value = p, LCL = LCL, UCL = UCL, alternative = alternative)
-    # print(sprintf("P-value = %g",p))
-    # print(sprintf("Lower %.2f%% Confidence Limit = %g",
-    #               alpha, LCL))
-    # print(sprintf("Upper %.2f%% Confidence Limit = %g",
-    #               alpha, UCL))
     return(value)
   }
   t.test3 <- function(x, y, V1, V2, m0 = 0, alpha = 0.05, alternative = "two.sided") {
@@ -329,15 +323,9 @@ server <- function(input, output) {
     } else {
       pnorm(statistic, lower.tail = FALSE)
     }
-    # p <- (1 - pnorm((M-m0)/S))
     LCL <- (M1 - M2 - S * qnorm(1 - alpha / 2))
     UCL <- (M1 - M2 + S * qnorm(1 - alpha / 2))
     value <- list(mean1 = M1, mean2 = M2, m0 = m0, sigma1 = sigma1, sigma2 = sigma2, S = S, statistic = statistic, p.value = p, LCL = LCL, UCL = UCL, alternative = alternative)
-    # print(sprintf("P-value = %g",p))
-    # print(sprintf("Lower %.2f%% Confidence Limit = %g",
-    #               alpha, LCL))
-    # print(sprintf("Upper %.2f%% Confidence Limit = %g",
-    #               alpha, UCL))
     return(value)
   }
   prop.z.test <- function(x, n, p0 = 0.5, conf.level = 0.95, alternative = "two.sided") {
