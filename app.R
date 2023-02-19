@@ -23,7 +23,7 @@ ui <- fluidPage(
       selectInput(
         inputId = "inference",
         label = "Inference for:",
-        choices = c("one mean", "two means", "two means (paired samples)", "one proportion", "two proportions", "one variance", "two variances"),
+        choices = c("one mean", "two means (independent samples)", "two means (paired samples)", "one proportion", "two proportions", "one variance", "two variances"),
         multiple = FALSE,
         selected = "one mean"
       ),
@@ -41,7 +41,7 @@ ui <- fluidPage(
         )
       ),
       conditionalPanel(
-        condition = "input.inference == 'two means'",
+        condition = "input.inference == 'two means (independent samples)'",
         textInput("sample1_twomeans", "Sample 1", value = "10, 20, 30", placeholder = "Enter values separated by a comma"),
         textInput("sample2_twomeans", "Sample 2", value = "15, 25, 35", placeholder = "Enter values separated by a comma"),
         hr(),
@@ -166,7 +166,7 @@ ui <- fluidPage(
         sprintf("\\( H_0 : \\mu = \\)")
       ),
       conditionalPanel(
-        condition = "input.inference == 'two means'",
+        condition = "input.inference == 'two means (independent samples)'",
         sprintf("\\( H_0 : \\mu_1 - \\mu_2 = \\)")
       ),
       conditionalPanel(
@@ -250,7 +250,7 @@ ui <- fluidPage(
         uiOutput("results_onemean")
       ),
       conditionalPanel(
-        condition = "input.inference == 'two means'",
+        condition = "input.inference == 'two means (independent samples)'",
         uiOutput("results_twomeans")
       ),
       conditionalPanel(
@@ -604,7 +604,7 @@ server <- function(input, output) {
     dat2 <- extract(input$sample2_twomeans)
     if (anyNA(dat1) | length(dat1) < 2 | anyNA(dat2) | length(dat2) < 2) {
       "Invalid input or not enough observations"
-    } else if (input$inference == "two means" & input$popsd_twomeans == FALSE & input$var.equal == TRUE) {
+    } else if (input$inference == "two means (independent samples)" & input$popsd_twomeans == FALSE & input$var.equal == TRUE) {
       test_confint <- t.test(x = dat1, y = dat2, mu = input$h0, alternative = "two.sided", conf.level = 1 - input$alpha, paired = FALSE, var.equal = TRUE)
       test <- t.test(x = dat1, y = dat2, mu = input$h0, alternative = input$alternative, conf.level = 1 - input$alpha, paired = FALSE, var.equal = TRUE)
       s_p <- sqrt(((length(dat1) - 1) * var(dat1) + (length(dat2) - 1) * var(dat2)) / test_confint$parameter)
@@ -665,7 +665,7 @@ server <- function(input, output) {
         br(),
         paste0("At the ", input$alpha * 100, "% significance level, ", ifelse(test$p.value < input$alpha, "we reject the null hypothesis that the true difference in means is ", "we do not reject the null hypothesis that the true difference in means is "), test$null.value, " \\((p\\)-value ", ifelse(test$p.value < 0.001, "< 0.001", paste0("\\(=\\) ", round(test$p.value, 3))), ")", ".")
       )
-    } else if (input$inference == "two means" & input$popsd_twomeans == FALSE & input$var.equal == FALSE) {
+    } else if (input$inference == "two means (independent samples)" & input$popsd_twomeans == FALSE & input$var.equal == FALSE) {
       test_confint <- t.test(x = dat1, y = dat2, mu = input$h0, alternative = "two.sided", conf.level = 1 - input$alpha, paired = FALSE, var.equal = FALSE)
       test <- t.test(x = dat1, y = dat2, mu = input$h0, alternative = input$alternative, conf.level = 1 - input$alpha, paired = FALSE, var.equal = FALSE)
       withMathJax(
@@ -725,7 +725,7 @@ server <- function(input, output) {
         br(),
         paste0("At the ", input$alpha * 100, "% significance level, ", ifelse(test$p.value < input$alpha, "we reject the null hypothesis that the true difference in means is ", "we do not reject the null hypothesis that the true difference in means is "), test$null.value, " \\((p\\)-value ", ifelse(test$p.value < 0.001, "< 0.001", paste0("\\(=\\) ", round(test$p.value, 3))), ")", ".")
       )
-    } else if (input$inference == "two means" & input$popsd_twomeans == TRUE) {
+    } else if (input$inference == "two means (independent samples)" & input$popsd_twomeans == TRUE) {
       test <- t.test3(x = dat1, y = dat2, V1 = input$sigma21_twomeans, V2 = input$sigma22_twomeans, m0 = input$h0, alpha = input$alpha, alternative = input$alternative)
       withMathJax(
         paste("My data:"),
@@ -1357,7 +1357,7 @@ server <- function(input, output) {
         ylab("Density") +
         xlab("x")
       p
-    } else if (input$inference == "two means" & input$popsd_twomeans == FALSE & input$var.equal == TRUE) {
+    } else if (input$inference == "two means (independent samples)" & input$popsd_twomeans == FALSE & input$var.equal == TRUE) {
       dat1 <- extract(input$sample1_twomeans)
       dat2 <- extract(input$sample2_twomeans)
       test <- t.test(x = dat1, y = dat2, mu = input$h0, alternative = input$alternative, conf.level = 1 - input$alpha, paired = FALSE, var.equal = TRUE)
@@ -1391,7 +1391,7 @@ server <- function(input, output) {
         ylab("Density") +
         xlab("x")
       p
-    } else if (input$inference == "two means" & input$popsd_twomeans == FALSE & input$var.equal == FALSE) {
+    } else if (input$inference == "two means (independent samples)" & input$popsd_twomeans == FALSE & input$var.equal == FALSE) {
       dat1 <- extract(input$sample1_twomeans)
       dat2 <- extract(input$sample2_twomeans)
       test <- t.test(x = dat1, y = dat2, mu = input$h0, alternative = input$alternative, conf.level = 1 - input$alpha, paired = FALSE, var.equal = FALSE)
@@ -1425,7 +1425,7 @@ server <- function(input, output) {
         ylab("Density") +
         xlab("x")
       p
-    } else if (input$inference == "two means" & input$popsd_twomeans == TRUE) {
+    } else if (input$inference == "two means (independent samples)" & input$popsd_twomeans == TRUE) {
       dat1 <- extract(input$sample1_twomeans)
       dat2 <- extract(input$sample2_twomeans)
       test <- t.test3(x = dat1, y = dat2, V1 = input$sigma21_twomeans, V2 = input$sigma22_twomeans, m0 = input$h0, alpha = input$alpha, alternative = input$alternative)
