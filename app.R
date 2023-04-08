@@ -15,7 +15,7 @@ library(EnvStats)
 ui <- fluidPage(
   
   # Application title 
-  titlePanel("EasyStat"),
+  titlePanel("SMARTStat"),
   
   # Sidebar with a slider input for the tests
   sidebarLayout(
@@ -240,7 +240,7 @@ ui <- fluidPage(
       HTML('<a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.ar" target="_blank"><img alt="Licence Creative Commons" style="border-width:0"
         src="https://mirrors.creativecommons.org/presskit/buttons/80x15/svg/by.svg"/></a> This work of <a href="http://sites.uclouvain.be/RShiny"
         target="_blank"><font face="Courier">RShiny</font></a> is made under the terms of the <a rel="license"
-        href="license" href="https://creativecommons.org/licenses/by/4.0/deed.ar" target="_blank">CC BY 4.0</a>. Source code available <a href="https://github.com/BKHOUILED/EasyStat" target="_blank">here</a>.')
+        href="license" href="https://creativecommons.org/licenses/by/4.0/deed.ar" target="_blank">CC BY 4.0</a>. Source code available <a href="https://github.com/BKHOUILED/Stat" target="_blank">here</a>.')
     ),
     
     # Show a conditional Panel
