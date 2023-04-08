@@ -1,1 +1,1 @@
-# EasyStat
+# SMARTStat
